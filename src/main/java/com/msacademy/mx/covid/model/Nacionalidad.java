@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 
 @Data
@@ -15,7 +16,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Entity
 @Table(name = "nacionalidad")
-public class Nacionalidad {
+public class Nacionalidad implements Serializable {
 
     @Id
     @Column(name = "id")

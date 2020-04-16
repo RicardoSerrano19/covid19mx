@@ -9,13 +9,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "entidad_federativa")
-public class EntidadFederativa {
+public class EntidadFederativa implements Serializable {
 
     @Id
     @Column(name = "id")
