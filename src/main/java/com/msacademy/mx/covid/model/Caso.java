@@ -3,9 +3,11 @@ package com.msacademy.mx.covid.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "caso")
 public class Caso {
 
     @Id
