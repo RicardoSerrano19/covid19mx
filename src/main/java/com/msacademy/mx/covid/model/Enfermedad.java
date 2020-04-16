@@ -5,10 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
@@ -21,30 +18,39 @@ public class Enfermedad {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "neumonia")
+    @OneToOne
+    @JoinColumn(name = "neumonia", referencedColumnName = "id")
     private Especificacion neumonia;
 
-    @Column(name = "diabetes")
+    @OneToOne
+    @JoinColumn(name = "diabetes", referencedColumnName = "id")
     private Especificacion diabetes;
 
-    @Column(name = "epoc")
+    @OneToOne
+    @JoinColumn(name = "epoc", referencedColumnName = "id")
     private Especificacion epoc;
 
-    @Column(name = "hipertension")
+    @OneToOne
+    @JoinColumn(name = "hipertension", referencedColumnName = "id")
     private Especificacion hipertension;
 
-    @Column(name = "asma")
+    @OneToOne
+    @JoinColumn(name = "asma", referencedColumnName = "id")
     private Especificacion asma;
 
-    @Column(name = "inmunusuprimido")
+    @OneToOne
+    @JoinColumn(name = "inmunusuprimido", referencedColumnName = "id")
     private Especificacion inmunusuprimido;
 
-    @Column(name = "cardiovascular")
+    @OneToOne
+    @JoinColumn(name = "cardiovascular", referencedColumnName = "id")
     private Especificacion cardiovascular;
 
-    @Column(name = "obesidad")
+    @OneToOne
+    @JoinColumn(name = "obesidad", referencedColumnName = "id")
     private Especificacion obesidad;
 
-    @Column(name = "renal_cronica")
+    @OneToOne
+    @JoinColumn(name = "renal_cronica", referencedColumnName = "id")
     private Especificacion renal_cronica;
 }

@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
@@ -20,22 +17,28 @@ public class Caso {
     @Id
     private Integer id;
 
-    @Column(name = "sector")
+    @OneToOne
+    @JoinColumn(name = "sector", referencedColumnName = "id")
     private Sector sector;
 
-    @Column(name = "entidad_unidad_medica")
+    @OneToOne
+    @JoinColumn(name = "entidad_unidad_medica", referencedColumnName = "id")
     private EntidadFederativa entidadUnidadMedica;
 
-    @Column(name = "sexo")
+    @OneToOne
+    @JoinColumn(name = "sexo", referencedColumnName = "id")
     private Sexo sexo;
 
-    @Column(name = "entidad_nacimiento")
+    @OneToOne
+    @JoinColumn(name = "entidad_nacimiento", referencedColumnName = "id")
     private EntidadFederativa entidadNacimiento;
 
-    @Column(name = "entidad_residencia")
+    @OneToOne
+    @JoinColumn(name = "entidad_residencia", referencedColumnName = "id")
     private EntidadFederativa entidadResidencia;
 
-    @Column(name = "tipo_paciente")
+    @OneToOne
+    @JoinColumn(name = "tipo_paciente", referencedColumnName = "id")
     private TipoPaciente tipoPaciente;
 
     @Column(name = "fecha_ingreso")
@@ -47,28 +50,37 @@ public class Caso {
     @Column(name = "fecha_defuncion")
     private LocalDate fechaDefuncion;
 
-    @Column(name = "intubado")
+    @OneToOne
+    @JoinColumn(name = "intubado", referencedColumnName = "id")
     private Especificacion intubado;
 
     @Column(name = "edad")
     private Integer edad;
 
-    @Column(name = "nacionalidad")
+    @OneToOne
+    @JoinColumn(name = "nacionalidad", referencedColumnName = "id")
     private Nacionalidad nacionalidad;
 
-    @Column(name = "lengua_indigena")
+    @OneToOne
+    @JoinColumn(name = "lengua_indigena", referencedColumnName = "id")
     private Especificacion lenguaIndigena;
 
-    @Column(name = "enfermedad")
+    @OneToOne
+    @JoinColumn(name = "enfermedad", referencedColumnName = "id")
     private Enfermedad enfermedad;
 
-    @Column(name = "embarazo")
+    @OneToOne
+    @JoinColumn(name = "embarazo", referencedColumnName = "id")
     private Especificacion embarazo;
 
-    @Column(name = "resultado")
+    @OneToOne
+    @JoinColumn(name = "resultado", referencedColumnName = "id")
     private Resultado resultado;
 
-    @Column(name = "cuidados_intensivos")
+    @OneToOne
+    @JoinColumn(name = "cuidados_intensivos", referencedColumnName = "id")
     private Especificacion cuidadosIntensivos;
+
+
 
 }
