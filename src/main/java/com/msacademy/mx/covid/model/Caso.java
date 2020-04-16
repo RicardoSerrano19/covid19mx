@@ -62,6 +62,6 @@ public class Caso {
     private Resultado resultado;
 
     @Column(name = "cuidados_intensivos")
-    private Especificacion embarazo;
+    private Especificacion cuidadosIntensivos;
 
 }
