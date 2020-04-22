@@ -55,4 +55,17 @@ public class Enfermedad implements Serializable {
     @OneToOne
     @JoinColumn(name = "renal_cronica", referencedColumnName = "id")
     private Especificacion renal_cronica;
+
+
+    public Enfermedad(Especificacion neumonia, Especificacion diabetes, Especificacion epoc, Especificacion hipertension, Especificacion asma, Especificacion inmunusuprimido, Especificacion cardiovascular, Especificacion obesidad, Especificacion renal_cronica) {
+        this.neumonia = neumonia;
+        this.diabetes = diabetes;
+        this.epoc = epoc;
+        this.hipertension = hipertension;
+        this.asma = asma;
+        this.inmunusuprimido = inmunusuprimido;
+        this.cardiovascular = cardiovascular;
+        this.obesidad = obesidad;
+        this.renal_cronica = renal_cronica;
+    }
 }
