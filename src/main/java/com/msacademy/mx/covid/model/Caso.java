@@ -84,6 +84,25 @@ public class Caso implements Serializable {
     @JoinColumn(name = "cuidados_intensivos", referencedColumnName = "id")
     private Especificacion cuidadosIntensivos;
 
+    public Caso(Sector sector, EntidadFederativa entidadUnidadMedica, Sexo sexo, EntidadFederativa entidadNacimiento, EntidadFederativa entidadResidencia, TipoPaciente tipoPaciente, LocalDate fechaIngreso, LocalDate fechaInicioSintomas, LocalDate fechaDefuncion, Especificacion intubado, Integer edad, Nacionalidad nacionalidad, Especificacion lenguaIndigena, Enfermedad enfermedad, Especificacion embarazo, Resultado resultado, Especificacion cuidadosIntensivos) {
+        this.sector = sector;
+        this.entidadUnidadMedica = entidadUnidadMedica;
+        this.sexo = sexo;
+        this.entidadNacimiento = entidadNacimiento;
+        this.entidadResidencia = entidadResidencia;
+        this.tipoPaciente = tipoPaciente;
+        this.fechaIngreso = fechaIngreso;
+        this.fechaInicioSintomas = fechaInicioSintomas;
+        this.fechaDefuncion = fechaDefuncion;
+        this.intubado = intubado;
+        this.edad = edad;
+        this.nacionalidad = nacionalidad;
+        this.lenguaIndigena = lenguaIndigena;
+        this.enfermedad = enfermedad;
+        this.embarazo = embarazo;
+        this.resultado = resultado;
+        this.cuidadosIntensivos = cuidadosIntensivos;
+    }
 
 
 }
