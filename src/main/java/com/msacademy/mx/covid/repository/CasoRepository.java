@@ -33,10 +33,15 @@ public interface CasoRepository extends JpaRepository<Caso,Integer> {
             "ORDER BY fechaIngreso")
     List<ConfirmadosTiempoDTO> findLineaTiempoConfirmados(@Param("codigo") String state);
 
-    @Query("SELECT new com.msacademy.mx.covid.model.DTO.ConfirmadosTiempoDTO(c.fechaDefuncion AS fecha,COUNT(c) AS cantidad) FROM Caso c WHERE c.entidadUnidadMedica.codigo = :codigo AND c.resultado = 1 " +
-            "AND c.fechaDefuncion != '2000-01-01' " +
+    @Query("SELECT new com.msacademy.mx.covid.model.DTO.ConfirmadosTiempoDTO(c.fechaIngreso AS fecha,COUNT(c) AS cantidad) FROM Caso c WHERE c.entidadUnidadMedica.codigo = :codigo AND c.resultado = 2 " +
             "GROUP BY c.fechaIngreso " +
             "ORDER BY fechaIngreso")
+    List<ConfirmadosTiempoDTO> findLineaTiempoSospechosos(@Param("codigo") String state);
+
+    @Query("SELECT new com.msacademy.mx.covid.model.DTO.ConfirmadosTiempoDTO(c.fechaDefuncion AS fecha,COUNT(c) AS cantidad) FROM Caso c WHERE c.entidadUnidadMedica.codigo = :codigo AND c.resultado = 1 " +
+            "AND c.fechaDefuncion != '2000-01-01' " +
+            "GROUP BY c.fechaDefuncion " +
+            "ORDER BY fechaDefuncion")
     List<ConfirmadosTiempoDTO> findLineaTiempoMuertes(@Param("codigo") String state);
 
     @Query("SELECT new com.msacademy.mx.covid.model.DTO.TipoCasoDTO(c.entidadUnidadMedica.codigo AS estado," +
@@ -47,5 +52,17 @@ public interface CasoRepository extends JpaRepository<Caso,Integer> {
             "GROUP BY c.entidadUnidadMedica.codigo " +
             "ORDER BY c.entidadUnidadMedica.codigo")
     List<TipoCasoDTO> findByTipoPaciente();
+
+    @Query("SELECT new com.msacademy.mx.covid.model.DTO.TipoCasoDTO(c.entidadUnidadMedica.codigo AS estado," +
+            "SUM(CASE WHEN c.tipoPaciente = 1 THEN 1 ELSE 0 END) AS ambulatorio," +
+            "SUM(CASE WHEN c.tipoPaciente = 2 AND c.intubado != 1 THEN 1 ELSE 0 END) AS estable," +
+            "SUM(CASE WHEN c.intubado = 1 THEN 1 ELSE 0 END) AS intubado) " +
+            "FROM Caso c WHERE c.resultado = 1 " +
+            "AND c.edad BETWEEN :inicio AND :fin " +
+            "GROUP BY c.entidadUnidadMedica.codigo " +
+            "ORDER BY c.entidadUnidadMedica.codigo")
+    List<TipoCasoDTO> findByTipoPacienteAndAge(@Param("inicio") Integer inicio, @Param("fin") Integer fin);
+
+
 
 }
