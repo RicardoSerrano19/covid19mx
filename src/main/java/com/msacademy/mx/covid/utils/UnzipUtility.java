@@ -1,10 +1,12 @@
 package com.msacademy.mx.covid.utils;
 
+import org.springframework.stereotype.Component;
+
 import java.io.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-
+@Component
 public class UnzipUtility {
 
     private static final int BUFFER_SIZE = 4096;

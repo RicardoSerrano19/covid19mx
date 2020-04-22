@@ -1,5 +1,7 @@
 package com.msacademy.mx.covid.utils;
 
+import org.springframework.stereotype.Component;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -7,11 +9,12 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+@Component
 public class HttpDownloadUtility {
     private static final int BUFFER_SIZE = 4096;
 
 
-    public static void downloadFile(String fileURL, String saveDir)
+    public void downloadFile(String fileURL, String saveDir)
             throws IOException {
         URL url = new URL(fileURL);
         HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
