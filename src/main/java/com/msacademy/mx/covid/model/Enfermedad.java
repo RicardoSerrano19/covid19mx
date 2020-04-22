@@ -17,6 +17,7 @@ public class Enfermedad implements Serializable {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @OneToOne
