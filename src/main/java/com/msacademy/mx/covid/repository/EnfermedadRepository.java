@@ -5,9 +5,11 @@ import com.msacademy.mx.covid.model.Enfermedad;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface EnfermedadRepository extends JpaRepository<Enfermedad,Integer> {
 
     @Query("SELECT new com.msacademy.mx.covid.model.DTO.EnfermedadesDTO(c.entidadUnidadMedica.codigo AS estado,COUNT(c) As totalMuertes," +
