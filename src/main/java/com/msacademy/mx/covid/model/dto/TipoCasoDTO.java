@@ -1,4 +1,4 @@
-package com.msacademy.mx.covid.model.DTO;
+package com.msacademy.mx.covid.model.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +21,6 @@ public class TipoCasoDTO implements Serializable {
         this.ambulatorio = ambulatorios;
         this.hospitalizados.put("estable",estables);
         this.hospitalizados.put("intubado",intubados);
-
     }
 
 }

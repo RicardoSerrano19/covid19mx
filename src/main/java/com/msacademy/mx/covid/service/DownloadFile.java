@@ -2,11 +2,12 @@ package com.msacademy.mx.covid.service;
 
 
 import com.msacademy.mx.covid.model.*;
-import com.msacademy.mx.covid.repository.CasoRepository;
 import com.msacademy.mx.covid.utils.HttpDownloadUtility;
 import com.msacademy.mx.covid.utils.UnzipUtility;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class DownloadFile {
+
+    private final Logger logger= LoggerFactory.getLogger(DownloadFile.class);
+
     @Autowired
     HttpDownloadUtility httpDownloadUtility;
 
@@ -28,27 +33,25 @@ public class DownloadFile {
     UnzipUtility unzipUtility;
 
     public static final String FILE_URL = "http://187.191.75.115//gobmx//salud//datos_abiertos//datos_abiertos_covid19.zip";
-    public static final String SAVE_DIR = "../dataBase";
-    public static final String ZIP_FILE_PATH = "..//dataBase//datos_abiertos_covid19.zip";
+    public static final String SAVE_DIR = ".//dataBase";
+    public static final String ZIP_FILE_PATH = ".//dataBase//datos_abiertos_covid19.zip";
 
 
 
-    public ArrayList<Caso> getData(){
+    public List<Caso> getData(){
         ArrayList<Caso> casoArrayList = new ArrayList<>();
 
         if(isUpdated()){
             ArrayList<String> lastFile = getCSV(SAVE_DIR);
             if(lastFile.size() == 1){
-                System.out.println("SE TIENE QUE BUSCAR DESCARGAR DE NUEVO EN CIERTO TIEMPO");
             }else{
-                System.out.println("File 1: " + lastFile.get(0));
-                System.out.println("File 2: " + lastFile.get(1));
+                logger.info(lastFile.get(0));
+                logger.info(lastFile.get(1));
                 deleteFiles(SAVE_DIR,lastFile.get(0));
-                System.out.println("Insertar el ultimo y borrar el primero (Esperar 1 dia a desc el sig)");
                 casoArrayList = readCSV(SAVE_DIR + "//" +lastFile.get(1));
             }
         }else{
-            System.out.println("No se pudo descargar y/o descomprimir el archivo");
+            logger.info("No se pudo descargar y/o descomprimir el archivo");
         }
 
         return casoArrayList;
@@ -56,8 +59,7 @@ public class DownloadFile {
 
     public boolean isUpdated(){
         boolean allProccesDone = false;
-        if(downloadFile(FILE_URL,SAVE_DIR))
-            if(unZipFile(ZIP_FILE_PATH,SAVE_DIR))
+        if(downloadFile(FILE_URL,SAVE_DIR) && unZipFile(ZIP_FILE_PATH,SAVE_DIR))
                 allProccesDone = true;
 
         return allProccesDone;
@@ -67,7 +69,7 @@ public class DownloadFile {
         try{
             Files.delete(Paths.get(dir + "//" + file));
         }catch (IOException e){
-            e.printStackTrace();
+            logger.error(e.toString());
         }
     }
 
@@ -82,9 +84,10 @@ public class DownloadFile {
                     fileCSV.add(file);
                 }
             }catch (Exception e){
-                e.printStackTrace();
+                logger.error(e.toString());
             }
         }
+        Collections.sort(fileCSV);
         return fileCSV;
     }
 
@@ -93,8 +96,8 @@ public class DownloadFile {
         try {
             httpDownloadUtility.downloadFile(fileURL, saveDir);
             downloaded = true;
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (Exception ex) {
+            logger.error(ex.toString());
         }
 
         return downloaded;
@@ -107,7 +110,7 @@ public class DownloadFile {
             unzipper.unzip(zipFilePath, destDirectory);
             unzipped = true;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error(ex.toString());
         }
 
         return unzipped;
@@ -166,10 +169,9 @@ public class DownloadFile {
 
                 casos.add(caso);
             }
-            System.out.println("Finish");
         }
         catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.toString());
         }
 
         return casos;

@@ -1,6 +1,6 @@
 package com.msacademy.mx.covid.repository;
 
-import com.msacademy.mx.covid.model.DTO.EnfermedadesDTO;
+import com.msacademy.mx.covid.model.dto.EnfermedadesDTO;
 import com.msacademy.mx.covid.model.Enfermedad;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface EnfermedadRepository extends JpaRepository<Enfermedad,Integer> {
 
-    @Query("SELECT new com.msacademy.mx.covid.model.DTO.EnfermedadesDTO(c.entidadUnidadMedica.codigo AS estado,COUNT(c) As totalMuertes," +
+    @Query("SELECT new com.msacademy.mx.covid.model.dto.EnfermedadesDTO(c.entidadUnidadMedica.codigo AS estado,COUNT(c) As totalMuertes," +
             "SUM(CASE WHEN c.enfermedad.neumonia = 1 THEN 1 ELSE 0 END) AS neumonia," +
             "SUM(CASE WHEN c.enfermedad.diabetes = 1 THEN 1 ELSE 0 END) AS diabetes," +
             "SUM(CASE WHEN c.enfermedad.epoc = 1 THEN 1 ELSE 0 END) AS epoc," +
@@ -28,7 +28,7 @@ public interface EnfermedadRepository extends JpaRepository<Enfermedad,Integer> 
             "ORDER BY c.entidadUnidadMedica.codigo")
     List<EnfermedadesDTO> findByEnfermedad();
 
-    @Query("SELECT new com.msacademy.mx.covid.model.DTO.EnfermedadesDTO(c.entidadUnidadMedica.codigo AS estado,COUNT(c) As totalMuertes," +
+    @Query("SELECT new com.msacademy.mx.covid.model.dto.EnfermedadesDTO(c.entidadUnidadMedica.codigo AS estado,COUNT(c) As totalMuertes," +
             "SUM(CASE WHEN c.enfermedad.neumonia = 1 THEN 1 ELSE 0 END) AS neumonia," +
             "SUM(CASE WHEN c.enfermedad.diabetes = 1 THEN 1 ELSE 0 END) AS diabetes," +
             "SUM(CASE WHEN c.enfermedad.epoc = 1 THEN 1 ELSE 0 END) AS epoc," +
@@ -43,5 +43,5 @@ public interface EnfermedadRepository extends JpaRepository<Enfermedad,Integer> 
             "AND c.entidadUnidadMedica.codigo = :codigo " +
             "GROUP BY c.entidadUnidadMedica.codigo " +
             "ORDER BY c.entidadUnidadMedica.codigo")
-    List<EnfermedadesDTO> findByEnfermedadAndState(@Param("codigo") String state);
+    EnfermedadesDTO findByEnfermedadAndState(@Param("codigo") String state);
 }

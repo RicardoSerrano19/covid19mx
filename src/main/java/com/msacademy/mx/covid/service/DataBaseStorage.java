@@ -4,13 +4,17 @@ import com.msacademy.mx.covid.model.Caso;
 import com.msacademy.mx.covid.model.Enfermedad;
 import com.msacademy.mx.covid.repository.CasoRepository;
 import com.msacademy.mx.covid.repository.EnfermedadRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class DataBaseStorage {
+    private final Logger logger= LoggerFactory.getLogger(DataBaseStorage.class);
 
     @Autowired
     CasoRepository casoRepository;
@@ -24,24 +28,21 @@ public class DataBaseStorage {
 
     public boolean guardarTodo(){
         boolean isSaved = false;
-        ArrayList<Caso> casosList = downloadFile.getData();
-        if(!casosList.isEmpty()){
-            if(borrarTodo()) {
+        List<Caso> casosList = downloadFile.getData();
+        if(!casosList.isEmpty() && borrarTodo()) {
                 ArrayList<Enfermedad> listaEndermedades = new ArrayList<>();
                 for (Caso individual : casosList) {
                     listaEndermedades.add(individual.getEnfermedad());
                 }
                 try {
                     enfermedadRepository.saveAll(listaEndermedades);
-                    System.out.println("Save Enfermedades");
+                    logger.info("Enfermedades Guardadas");
                     casoRepository.saveAll(casosList);
-                    System.out.println("Save CASOS");
-
+                    logger.info("Casos Guardados");
                     isSaved = true;
                 } catch (Exception ex) {
-                    System.out.println(ex.getStackTrace());
+                    logger.error(ex.toString());
                 }
-            }
         }
         return isSaved;
     }
@@ -51,11 +52,12 @@ public class DataBaseStorage {
         boolean isDeleted = false;
         try{
             casoRepository.deleteAll();
+            logger.info("Casos borrados");
             enfermedadRepository.deleteAll();
-            System.out.println("Deleted");
+            logger.info("Enfermedades borradas");
             isDeleted= true;
         }catch(Exception ex){
-            ex.printStackTrace();
+            logger.error(ex.toString());
         }
         return isDeleted;
     }

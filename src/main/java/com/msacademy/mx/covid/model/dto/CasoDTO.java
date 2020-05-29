@@ -1,4 +1,4 @@
-package com.msacademy.mx.covid.model.DTO;
+package com.msacademy.mx.covid.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

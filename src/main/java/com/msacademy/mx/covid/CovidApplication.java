@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 public class CovidApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CovidApplication.class, args);
+		SpringApplication.run(CovidApplication.class);
 	}
 
 }
